@@ -9,7 +9,11 @@ import (
 )
 
 func TestHomeManifestContract(t *testing.T) {
-	h := &Handler{}
+	body, err := HomeXML()
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := &Handler{Manifest: body}
 	for _, locale := range []string{"en-US", "en-IE", "ja-JP", "zh-Hant-TW"} {
 		r := httptest.NewRequest(http.MethodGet, "/epix/"+locale+"/dashhome.xml", nil)
 		w := httptest.NewRecorder()
@@ -50,7 +54,11 @@ func TestHomeManifestContract(t *testing.T) {
 }
 
 func TestHTTPBehaviour(t *testing.T) {
-	h := &Handler{}
+	body, err := HomeXML()
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := &Handler{Manifest: body}
 	for _, tc := range []struct {
 		method, path string
 		status       int

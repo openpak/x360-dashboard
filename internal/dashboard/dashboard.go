@@ -16,7 +16,10 @@ var content embed.FS
 var manifestPath = regexp.MustCompile(`^/epix/[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*/dashhome\.xml$`)
 
 // Handler serves public dashboard content and logs missing resource requests.
-type Handler struct{ Log *slog.Logger }
+type Handler struct {
+	Log      *slog.Logger
+	Manifest []byte
+}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	status := http.StatusOK
@@ -40,13 +43,13 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	body, err := content.ReadFile("dashhome.xml")
-	if err != nil {
+	body := h.Manifest
+	if len(body) == 0 {
 		status = http.StatusInternalServerError
 		http.Error(w, "content unavailable", status)
 		return
 	}
-	w.Header().Set("Content-Type", "application/xml; charset=utf-8")
+	w.Header().Set("Content-Type", "application/octet-stream")
 	w.Header().Set("Content-Length", strconv.Itoa(len(body)))
 	w.Header().Set("Cache-Control", "public, max-age=60")
 	if r.Method == http.MethodGet {

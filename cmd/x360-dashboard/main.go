@@ -20,7 +20,22 @@ func main() {
 	if addr == "" {
 		addr = ":10043"
 	}
-	srv := &http.Server{Addr: addr, Handler: &dashboard.Handler{Log: log}, ReadHeaderTimeout: 10 * time.Second}
+	key, err := os.ReadFile(os.Getenv("X360_DASHBOARD_SIGNING_KEY"))
+	if err != nil {
+		log.Error("content signing key", "err", err)
+		os.Exit(2)
+	}
+	xml, err := dashboard.HomeXML()
+	if err != nil {
+		log.Error("manifest", "err", err)
+		os.Exit(2)
+	}
+	signed, err := dashboard.SignManifest(xml, key)
+	if err != nil {
+		log.Error("sign manifest", "err", err)
+		os.Exit(2)
+	}
+	srv := &http.Server{Addr: addr, Handler: &dashboard.Handler{Log: log, Manifest: signed}, ReadHeaderTimeout: 10 * time.Second}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	go func() {
