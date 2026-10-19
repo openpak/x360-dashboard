@@ -1,0 +1,13 @@
+# Merge into the primary dynamic.yml.
+http:
+  routers:
+    x360-dashboard-web:
+      entryPoints: [web]
+      rule: Host(`content.xboxlive.com`)
+      priority: 45
+      service: x360-dashboard-http
+  services:
+    x360-dashboard-http:
+      loadBalancer:
+        servers:
+        - url: http://openpak-x360-dashboard:10043

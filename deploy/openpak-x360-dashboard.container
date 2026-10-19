@@ -1,0 +1,19 @@
+[Unit]
+Description=OpenPak Xbox 360 dashboard Home content
+
+[Container]
+ContainerName=openpak-x360-dashboard
+Image=ghcr.io/openpak/x360-dashboard:latest
+AutoUpdate=registry
+Network=openpak.network
+Environment=X360_DASHBOARD_ADDR=:10043
+ReadOnly=true
+DropCapability=ALL
+NoNewPrivileges=true
+UserNS=keep-id:uid=100,gid=101
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

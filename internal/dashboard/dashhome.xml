@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <id>openpak-home</id>
+  <defaultchannelid>HOME</defaultchannelid>
+  <channel>
+    <id>HOME</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>OpenPak</description>
+      <slotgroup>
+        <slot>
+          <definitionpath>slot://DiscInTray</definitionpath>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>OpenPak</name>
+          <description>OpenPak network</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_controller.png</param>
+          </deepasset>
+          <metadata>
+            <property>
+              <name>interactive</name>
+              <value>no</value>
+            </property>
+          </metadata>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Games</name>
+          <description>Insert a disc to play</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_controller.png</param>
+          </deepasset>
+          <metadata>
+            <property>
+              <name>interactive</name>
+              <value>no</value>
+            </property>
+          </metadata>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Community</name>
+          <description>OpenPak community network</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_controller.png</param>
+          </deepasset>
+          <metadata>
+            <property>
+              <name>interactive</name>
+              <value>no</value>
+            </property>
+          </metadata>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+</manifest>
