@@ -126,6 +126,52 @@
     </channeldef>
   </channel>
   <channel>
+    <id>VIDEO</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>TV &amp; Movies</description>
+      <slotgroup>
+        <slot>
+          <name>Collection</name>
+          <description>Collection</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_apps.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>applibrary:Category=4;_LibraryType=video;</param>
+          </onclick>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+  <channel>
+    <id>APPS</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>Apps</description>
+      <slotgroup>
+        <slot>
+          <name>My Apps</name>
+          <description>My Apps</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_apps.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>applibrary:_LibraryType=apps;</param>
+          </onclick>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+  <channel>
     <id>SETTINGS</id>
     <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
       <description>Settings</description>
@@ -190,6 +236,39 @@
             <button>A</button>
             <action>EpixCmd</action>
             <cmd>EcNavToFamilySettings</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Account</name>
+          <description>Account</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_accountmanagement.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcAccountManagement</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Privacy</name>
+          <description>Privacy</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_privacy.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToPamApp</cmd>
+            <param>dash.privacyui.xex</param>
           </onclick>
         </slot>
       </slotgroup>

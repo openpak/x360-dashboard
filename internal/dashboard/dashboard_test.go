@@ -50,7 +50,7 @@ func TestHomeManifestContract(t *testing.T) {
 		if err := xml.Unmarshal(w.Body.Bytes(), &manifest); err != nil {
 			t.Fatal(err)
 		}
-		if manifest.ID == "" || manifest.Default != "HOME" || len(manifest.Channels) != 3 || manifest.Channels[0].ID != manifest.Default {
+		if manifest.ID == "" || manifest.Default != "HOME" || len(manifest.Channels) != 5 || manifest.Channels[0].ID != manifest.Default {
 			t.Fatalf("unselectable Home: %+v", manifest)
 		}
 		seen := map[string]bool{}
@@ -60,7 +60,7 @@ func TestHomeManifestContract(t *testing.T) {
 			}
 			seen[channel.ID] = true
 			def := channel.Definition
-			if def.Layout != "epix://TemplateOffline1HD.xur" || len(def.Groups) != 4 {
+			if def.Layout != "epix://TemplateOffline1HD.xur" || len(def.Groups) < 1 || len(def.Groups) > 6 {
 				t.Fatalf("invalid layout for %s: %+v", channel.ID, def)
 			}
 			for _, group := range def.Groups {
@@ -79,7 +79,7 @@ func TestHomeManifestContract(t *testing.T) {
 				}
 			}
 		}
-		for _, id := range []string{"HOME", "GAMES", "SETTINGS"} {
+		for _, id := range []string{"HOME", "GAMES", "VIDEO", "APPS", "SETTINGS"} {
 			if !seen[id] {
 				t.Fatalf("missing channel %s", id)
 			}
