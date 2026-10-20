@@ -50,7 +50,7 @@ func TestHomeManifestContract(t *testing.T) {
 		if err := xml.Unmarshal(w.Body.Bytes(), &manifest); err != nil {
 			t.Fatal(err)
 		}
-		if manifest.ID == "" || manifest.Default != "HOME" || len(manifest.Channels) != 5 || manifest.Channels[0].ID != manifest.Default {
+		if manifest.ID == "" || manifest.Default != "HOME" || len(manifest.Channels) != 7 || manifest.Channels[0].ID != manifest.Default {
 			t.Fatalf("unselectable Home: %+v", manifest)
 		}
 		seen := map[string]bool{}
@@ -79,9 +79,32 @@ func TestHomeManifestContract(t *testing.T) {
 				}
 			}
 		}
-		for _, id := range []string{"HOME", "GAMES", "VIDEO", "APPS", "SETTINGS"} {
-			if !seen[id] {
-				t.Fatalf("missing channel %s", id)
+		// Stock 17559 order: HOME, social, GAMES, VIDEO, MUSIC, APPS, SETTINGS.
+		// "social" is lower case in the stock manifest; MUSIC matches the
+		// dash's native IDS_CHANNEL_MUSIC strings.
+		for i, id := range []string{"HOME", "social", "GAMES", "VIDEO", "MUSIC", "APPS", "SETTINGS"} {
+			if manifest.Channels[i].ID != id {
+				t.Fatalf("channel %d is %s, want %s", i, manifest.Channels[i].ID, id)
+			}
+		}
+		// Manifest EcNavToURI runs XamLaunchURI untrusted (flags 5), which
+		// refuses avatareditor:, musiclibrary: and the activity schemes, and
+		// Friends/Messages need Live-delivered Guide modules absent from
+		// 17559. Only native commands that work offline belong here.
+		want := map[string][2]string{"social": {"Gamer Card", "EcShowGamerCard"}, "MUSIC": {"Music Library", "EcNavToMusicLibrary"}}
+		for _, channel := range manifest.Channels {
+			w, ok := want[channel.ID]
+			if !ok {
+				continue
+			}
+			slot := channel.Definition.Groups[0].Slots[0]
+			if slot.Name != w[0] || slot.Click.Command != w[1] || slot.Click.Param != "" {
+				t.Fatalf("%s tile: %+v", channel.ID, slot)
+			}
+			for _, group := range channel.Definition.Groups {
+				if c := group.Slots[0].Click; c.Command == "EcNavToURI" || c.Command == "EcConnectToLive" {
+					t.Fatalf("%s uses %s, which cannot work from a manifest", channel.ID, c.Command)
+				}
 			}
 		}
 	}

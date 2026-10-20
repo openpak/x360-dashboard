@@ -64,6 +64,28 @@
     </channeldef>
   </channel>
   <channel>
+    <id>social</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>Social</description>
+      <slotgroup>
+        <slot>
+          <name>Gamer Card</name>
+          <description>Gamer Card</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_pic.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcShowGamerCard</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+  <channel>
     <id>GAMES</id>
     <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
       <description>Games</description>
@@ -143,6 +165,28 @@
             <action>EpixCmd</action>
             <cmd>EcNavToURI</cmd>
             <param>applibrary:Category=4;_LibraryType=video;</param>
+          </onclick>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+  <channel>
+    <id>MUSIC</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>Music</description>
+      <slotgroup>
+        <slot>
+          <name>Music Library</name>
+          <description>Music Library</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_SongFile.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToMusicLibrary</cmd>
           </onclick>
         </slot>
       </slotgroup>
