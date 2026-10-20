@@ -35,6 +35,13 @@ func TestHomeManifestContract(t *testing.T) {
 					Groups []struct {
 						Slots []struct {
 							Definition string `xml:"definitionpath"`
+							Name       string `xml:"name"`
+							Click      struct {
+								Button  string `xml:"button"`
+								Action  string `xml:"action"`
+								Command string `xml:"cmd"`
+								Param   string `xml:"param"`
+							} `xml:"onclick"`
 						} `xml:"slot"`
 					} `xml:"slotgroup"`
 				} `xml:"channeldef"`
@@ -43,12 +50,39 @@ func TestHomeManifestContract(t *testing.T) {
 		if err := xml.Unmarshal(w.Body.Bytes(), &manifest); err != nil {
 			t.Fatal(err)
 		}
-		if manifest.ID == "" || manifest.Default != "HOME" || len(manifest.Channels) != 1 || manifest.Channels[0].ID != manifest.Default {
+		if manifest.ID == "" || manifest.Default != "HOME" || len(manifest.Channels) != 3 || manifest.Channels[0].ID != manifest.Default {
 			t.Fatalf("unselectable Home: %+v", manifest)
 		}
-		def := manifest.Channels[0].Definition
-		if def.Layout != "epix://TemplateOffline1HD.xur" || len(def.Groups) != 4 || def.Groups[0].Slots[0].Definition != "slot://DiscInTray" {
-			t.Fatalf("invalid layout: %+v", def)
+		seen := map[string]bool{}
+		for _, channel := range manifest.Channels {
+			if seen[channel.ID] {
+				t.Fatalf("duplicate channel %s", channel.ID)
+			}
+			seen[channel.ID] = true
+			def := channel.Definition
+			if def.Layout != "epix://TemplateOffline1HD.xur" || len(def.Groups) != 4 {
+				t.Fatalf("invalid layout for %s: %+v", channel.ID, def)
+			}
+			for _, group := range def.Groups {
+				if len(group.Slots) != 1 {
+					t.Fatal("each layout group needs one tile")
+				}
+				slot := group.Slots[0]
+				if slot.Definition == "slot://DiscInTray" {
+					continue
+				}
+				if slot.Name == "" || slot.Click.Button != "A" || slot.Click.Action != "EpixCmd" || slot.Click.Command == "" {
+					t.Fatalf("inert tile in %s: %+v", channel.ID, slot)
+				}
+				if slot.Name == "My Games" && (slot.Click.Command != "EcNavToURI" || slot.Click.Param != "gameslibrary:_RootTitle=%slot_description%;") {
+					t.Fatalf("My Games must open the native installed-title library: %+v", slot)
+				}
+			}
+		}
+		for _, id := range []string{"HOME", "GAMES", "SETTINGS"} {
+			if !seen[id] {
+				t.Fatalf("missing channel %s", id)
+			}
 		}
 	}
 }

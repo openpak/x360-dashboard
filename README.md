@@ -19,8 +19,11 @@ Traefik fragment in deploy/. Wharf uses its local DNS override until real-consol
 `X360_DASHBOARD_ADDR` defaults to `:10043`. Run `GOWORK=off go test ./...`.
 Tag releases to publish ghcr.io/openpak/x360-dashboard for amd64 and arm64.
 
-Status: bootstrap Home with disc and OpenPak tiles. XML, HTTP, and signature checks pass locally;
-console parsing and rendering must be verified on Wharf before claiming Home works.
+Status: Home, Games and Settings channels use the stock dashboard renderer. Authored tiles
+invoke native My Games, Recent, My Apps, profile, system, preferences and family screens.
+No online Social package is supplied yet. XML, HTTP and signature checks pass locally;
+this expanded navigation still needs client verification. Installed-title discovery and
+launching depend on the console content store and remain separate from opening My Games.
 Persistent profile settings, store listings, game catalogs, and personalized Home content
 are separate work. Licensed AGPL-3.0; see LICENSE.
 

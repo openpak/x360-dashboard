@@ -5,7 +5,7 @@
   <channel>
     <id>HOME</id>
     <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
-      <description>OpenPak</description>
+      <description>Home</description>
       <slotgroup>
         <slot>
           <definitionpath>slot://DiscInTray</definitionpath>
@@ -13,53 +13,184 @@
       </slotgroup>
       <slotgroup>
         <slot>
-          <name>OpenPak</name>
-          <description>OpenPak network</description>
+          <name>My Games</name>
+          <description>My Games</description>
           <deepasset>
             <format>EpixScene</format>
             <path>EsLiveTile</path>
             <param>common://ico_64x_controller.png</param>
           </deepasset>
-          <metadata>
-            <property>
-              <name>interactive</name>
-              <value>no</value>
-            </property>
-          </metadata>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>gameslibrary:_RootTitle=%slot_description%;</param>
+          </onclick>
         </slot>
       </slotgroup>
       <slotgroup>
         <slot>
-          <name>Games</name>
-          <description>Insert a disc to play</description>
+          <name>Recent</name>
+          <description>Recent</description>
           <deepasset>
             <format>EpixScene</format>
             <path>EsLiveTile</path>
-            <param>common://ico_64x_controller.png</param>
+            <param>common://ico_64x_clock.png</param>
           </deepasset>
-          <metadata>
-            <property>
-              <name>interactive</name>
-              <value>no</value>
-            </property>
-          </metadata>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>contentlibrary:_SlotCount=10;SortOrder=2;_Launch=true;_Quickplay</param>
+          </onclick>
         </slot>
       </slotgroup>
       <slotgroup>
         <slot>
-          <name>Community</name>
-          <description>OpenPak community network</description>
+          <name>Profile</name>
+          <description>Profile</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_pic.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcShowGamerCard</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+  <channel>
+    <id>GAMES</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>Games</description>
+      <slotgroup>
+        <slot>
+          <name>My Games</name>
+          <description>My Games</description>
           <deepasset>
             <format>EpixScene</format>
             <path>EsLiveTile</path>
             <param>common://ico_64x_controller.png</param>
           </deepasset>
-          <metadata>
-            <property>
-              <name>interactive</name>
-              <value>no</value>
-            </property>
-          </metadata>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>gameslibrary:_RootTitle=%slot_description%;</param>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Recent</name>
+          <description>Recent</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_clock.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>contentlibrary:_SlotCount=10;SortOrder=2;_Launch=true;_Quickplay</param>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <definitionpath>slot://DiscInTray</definitionpath>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>My Apps</name>
+          <description>My Apps</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_apps.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToURI</cmd>
+            <param>applibrary:_LibraryType=apps;</param>
+          </onclick>
+        </slot>
+      </slotgroup>
+    </channeldef>
+  </channel>
+  <channel>
+    <id>SETTINGS</id>
+    <channeldef layouttemplate="epix://TemplateOffline1HD.xur">
+      <description>Settings</description>
+      <slotgroup>
+        <slot>
+          <name>System</name>
+          <description>System</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_console.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToSettings</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Profile</name>
+          <description>Profile</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_pic.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcShowGamerCard</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Preferences</name>
+          <description>Preferences</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_settingspreferences.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcShowOptionsUI</cmd>
+          </onclick>
+        </slot>
+      </slotgroup>
+      <slotgroup>
+        <slot>
+          <name>Family</name>
+          <description>Family</description>
+          <deepasset>
+            <format>EpixScene</format>
+            <path>EsLiveTile</path>
+            <param>common://ico_64x_family.png</param>
+          </deepasset>
+          <onclick>
+            <button>A</button>
+            <action>EpixCmd</action>
+            <cmd>EcNavToFamilySettings</cmd>
+          </onclick>
         </slot>
       </slotgroup>
     </channeldef>
