@@ -21,3 +21,7 @@ Home payloads use the native YTGR header, RSA PKCS#1 v1.5 SHA-1 header signature
 independent payload SHA-1. Wharf must pin the matching public modulus via `--xsigner_public_key`.
 Key generation and distribution are deployment steps; no private key is in the image or repository.
 The matching trust update on real consoles is still pending.
+
+## Channels
+
+Home, Games and Settings channels use the stock dashboard renderer. Authored tiles invoke native My Games, Recent, My Apps, profile, system, preferences and family screens. No online Social package is supplied. Installed-title discovery and launching depend on the console content store and are separate from opening My Games.
