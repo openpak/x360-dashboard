@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/openpak/x360-common/httplog"
 	"github.com/openpak/x360-dashboard/internal/dashboard"
 )
 
@@ -35,7 +36,7 @@ func main() {
 		log.Error("sign manifest", "err", err)
 		os.Exit(2)
 	}
-	srv := &http.Server{Addr: addr, Handler: &dashboard.Handler{Log: log, Manifest: signed}, ReadHeaderTimeout: 10 * time.Second}
+	srv := &http.Server{Addr: addr, Handler: httplog.Wrap(&dashboard.Handler{Log: log, Manifest: signed}), ReadHeaderTimeout: 10 * time.Second}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	go func() {
